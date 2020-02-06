@@ -6,6 +6,11 @@ import RaisedButton from 'material-ui/RaisedButton';
 import API from '../utils'
 
 export class FormUserDetails extends Component {
+
+    currSty(num) {
+        return (new Intl.NumberFormat('en-GB').format(num))
+    }
+
     continue = e =>{
         e.preventDefault();
         API.sendData(this.props.values)
@@ -25,7 +30,7 @@ export class FormUserDetails extends Component {
         return (
             <MuiThemeProvider>
                 <React.Fragment>
-                    <AppBar title="Confirm Data" />
+                    <AppBar title="One last check before sendind the data!!!" />
                     <List>
                         <ListItem 
                             primaryText="First Name"
@@ -53,7 +58,7 @@ export class FormUserDetails extends Component {
                         />
                         <ListItem 
                             primaryText="Monthly Income"
-                            secondaryText={income}
+                            secondaryText={this.currSty(income)}
                         />
                         <ListItem 
                             primaryText="Tax"
@@ -61,11 +66,11 @@ export class FormUserDetails extends Component {
                         />
                         <ListItem 
                             primaryText="Monthly Expense"
-                            secondaryText={expense}
+                            secondaryText={this.currSty(expense)}
                         />
                         <ListItem 
                             primaryText="Savings"
-                            secondaryText={savings}
+                            secondaryText={this.currSty(savings)}
                         />
                     </List>
                     <br/>

@@ -181,9 +181,14 @@ router.use("/getScenario", function (req, res){
 
 //send data to database
 router.post("/sendCont", function(req, res){
-    dataFin = [req.body]
+    console.log(req.body)
+    dataCon = [{
+        firstName: req.body.firstName,
+        lastName: req.body.lastName,
+        email: req.body.email
+    }]
     db.BaseCont.collection
-        .insertMany(dataFin)
+        .insertMany(dataCon)
         .then(data => res.json(data))
         .catch(err => res.status(422).json(err));
 })

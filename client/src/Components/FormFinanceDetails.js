@@ -5,6 +5,7 @@ import TextField from 'material-ui/TextField';
 import RaisedButton from 'material-ui/RaisedButton';
 
 export class FormFinanceDetails extends Component {
+
     continue = e =>{
         e.preventDefault();
         this.props.nextStep()
