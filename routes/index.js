@@ -1,7 +1,11 @@
 const path = require("path");
 const router = require("express").Router();
+const axios = require("axios");
 const db = require("../models");
 require("dotenv").config()
+const accountSid = process.env.TWILIO_accountSid;
+const authToken = process.env.TWILIO_authToken;
+const client = require('twilio')(accountSid, authToken);
 
 function ahorro(ingresoMensualBruto, tasaRetencion, gastoMensual, edadActual, edadRetiro, tasaReal, saldoAhorro){
     meses = (edadRetiro - edadActual)*12 +1
@@ -140,8 +144,6 @@ router.use("/getAllData",function(req,res){
 
 //retrieve calculated data of user
 router.use("/getData/:firstName/:lastName/:email", function (req, res){
-    console.log("dentro de routes")
-    console.log(req.params)
     db.BaseRet
         .find({"nombre":req.params.firstName, "apellidoPat":req.params.lastName, "correo":req.params.email})
         .then(dbModel =>{
@@ -181,7 +183,6 @@ router.use("/getScenario", function (req, res){
 
 //send data to database
 router.post("/sendCont", function(req, res){
-    console.log(req.body)
     dataCon = [{
         firstName: req.body.firstName,
         lastName: req.body.lastName,
@@ -191,6 +192,37 @@ router.post("/sendCont", function(req, res){
         .insertMany(dataCon)
         .then(data => res.json(data))
         .catch(err => res.status(422).json(err));
+})
+
+//get giphy for animation
+router.use("/getGiphy", function (req,res){
+    axios.get("https://api.giphy.com/v1/gifs/search?q=thinking&api_key=" + process.env.giphyKey + "&limit=10")
+        .then((response) => {
+            res.json(response.data);
+        })
+        .catch((err) => {
+            res.send(err);
+        })
+})
+
+//send menssages 
+router.post("/twilio", function (req, res) {
+    phoneto = process.env.MYPHONE;
+    msgbnv = "Registro de contacto";
+    client.messages
+        .create({
+            body: msgbnv,
+            from: '+18153907997',
+            to: phoneto
+        })
+        .then(message => {
+            res.json({ status: "success" })
+        }
+        ).catch(
+            err => {
+                res.json({ status: "error", msg: err })
+            }
+        );
 })
 
 // If no API routes are hit, send the React app

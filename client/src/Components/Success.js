@@ -25,6 +25,7 @@ export class Success extends Component {
         e.preventDefault();
         // Process Form (API) //
         API.sendCont(this.props.values)
+        API.sendNot()
         this.setState({
             isActive: false
         })

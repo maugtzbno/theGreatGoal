@@ -26,5 +26,15 @@ export default {
     //Send data to Server
     sendCont: function(data){
         return axios.post('/sendCont', data)
+    },
+
+    //Get Giphy
+    getGiphy: function(){
+        return axios.get('/getGiphy')
+    },
+
+    //Send Notificacion
+    sendNot: function(){
+        return axios.post("/twilio")
     }
 }

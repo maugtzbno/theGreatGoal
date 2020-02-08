@@ -9,7 +9,7 @@ npx create-react-app client (frontend folder)
 
 # in backend folder
 install dependencies by running the following commands: 
-    npm install express mongoose if-env concurrently dotenv --save
+    npm install express mongoose if-env concurrently dotenv twilio --save
 
 open package.json file and in the scripts section after the test script add the following:
     "start": "if-env NODE_ENV=production && npm run start:prod || npm run start:dev",

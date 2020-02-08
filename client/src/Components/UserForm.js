@@ -116,6 +116,7 @@ export class UserForm extends Component {
             case 6:
                 return(
                     <Success
+                        prevStep={this.prevStep}
                         updateCalc={this.updateCalc}
                         values={values}
                     />
