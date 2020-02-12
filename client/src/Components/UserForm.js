@@ -25,7 +25,9 @@ export class UserForm extends Component {
         savings: "",
         //Calculated Values from API
         forecastedSavings: "",
-        forecastedRetire: ""
+        forecastedRetire: "",
+        scenSavings: [],
+        scenRetire: [],
     }
 
     // Proceed to next step
@@ -53,7 +55,9 @@ export class UserForm extends Component {
     updateCalc = input => {
         this.setState({
             forecastedSavings: input.pronosticoAhorro,
-            forecastedRetire: input.pronosticoHerencia
+            forecastedRetire: input.pronosticoHerencia,
+            scenSavings: input.escenarioAhorro,
+            scenRetire: input.escenarioHerencia
         })
     }
 
@@ -63,12 +67,14 @@ export class UserForm extends Component {
             age, retire, expected, 
             income, tax, expense,
             savings, 
-            forecastedSavings, forecastedRetire } = this.state;
+            forecastedSavings, forecastedRetire,
+            scenSavings, scenRetire } = this.state;
         const values = { firstName, lastName, email, 
             age, retire, expected, 
             income, tax, expense,
             savings, 
-            forecastedSavings, forecastedRetire };
+            forecastedSavings, forecastedRetire,
+            scenSavings, scenRetire };
         switch(step) {
             case 1:
                 return(

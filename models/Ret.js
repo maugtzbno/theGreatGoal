@@ -25,7 +25,10 @@ const RetSchema = new Schema({
     residualGoal: { type: Number, required: true},
     savingsGoal: { type: Number, required: true},
     monthlySavingsGoal: { type: Number, required: true},
-    monthlyExpenseGoal: { type: Number, required: true}
+    monthlyExpenseGoal: { type: Number, required: true},
+    scenSavings: [Number],
+    scenRetire: [Number]
+
 });
 
 const BaseRet = mongoose.model("BaseRet", RetSchema);

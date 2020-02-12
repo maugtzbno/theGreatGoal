@@ -27,7 +27,7 @@ export class Welcome extends Component {
                 <React.Fragment>
                     <AppBar title="Hi, I am your Robo Financial Advisor..."/>
                         <h2>Have you ever heard people talking about inflation?</h2>
-                        <p>Inflation is the rate at which prices increment and this affects you because your savings will be able to buy fewer stuff...</p>
+                        <p>Inflation is the rate at which prices increment and this will affect your savings...</p>
                         <p>Lets say that for the past ten years we had an average inflation of 3%</p>
                         <p>then a concert ticket that ten years ago cost 10 dollars today will be...</p>
                         <p>13.43</p>

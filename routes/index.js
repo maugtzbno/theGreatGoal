@@ -89,8 +89,10 @@ function retiro(data){
 
     tasaRealAhorro = 0.04;
     pronosticoAhorro = ahorro(ingresoMensualBruto, tasaRetencion, gastoMensual, edadActual, edadRetiro, tasaRealAhorro, saldoActual)[0];
+    escenarioAhorro = ahorro(ingresoMensualBruto, tasaRetencion, gastoMensual, edadActual, edadRetiro, tasaRealAhorro, saldoActual)[1];
     tasaRealRetiro = 0.03; 
     pronosticoHerencia = gasto(gastoMensual, edadRetiro, edadEsperanza, tasaRealRetiro, pronosticoAhorro)[0]
+    escenarioHerencia = gasto(gastoMensual, edadRetiro, edadEsperanza, tasaRealRetiro, pronosticoAhorro)[1]
 
     objetivoHerencia = 0;
     objetivoAhorro = calcSaldoInicial(gastoMensual, edadRetiro, edadEsperanza, tasaRealRetiro)
@@ -127,7 +129,10 @@ function retiro(data){
           objetivoHerencia: objetivoHerencia,
           objetivoAhorro: objetivoAhorro,
           objetivoAhorroMensual: objetivoAhorroMensual,
-          objetivoGastoMensual: objetivoGastoMensual
+          objetivoGastoMensual: objetivoGastoMensual,
+
+          escenarioAhorro: escenarioAhorro,
+          escenarioHerencia: escenarioHerencia
       }
     ]
 
