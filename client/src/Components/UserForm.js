@@ -5,6 +5,7 @@ import FormFinanceDetails from './FormFinanceDetails';
 import FormSavingDetails from './FormSavingDetails';
 import Confirm from './Confirm'
 import Success from './Success'
+//import Optimization from './Optimization'
 
 export class UserForm extends Component {
     state = {
@@ -27,7 +28,7 @@ export class UserForm extends Component {
         forecastedSavings: "",
         forecastedRetire: "",
         scenSavings: [],
-        scenRetire: [],
+        scenRetire: []
     }
 
     // Proceed to next step
@@ -54,10 +55,10 @@ export class UserForm extends Component {
     //Update calculated fields
     updateCalc = input => {
         this.setState({
-            forecastedSavings: input.pronosticoAhorro,
-            forecastedRetire: input.pronosticoHerencia,
-            scenSavings: input.escenarioAhorro,
-            scenRetire: input.escenarioHerencia
+            forecastedSavings: input.data.ops[0].pronosticoAhorro,
+            forecastedRetire: input.data.ops[0].pronosticoHerencia,
+            scenSavings: input.data.ops[0].escenarioAhorro,
+            scenRetire: input.data.ops[0].escenarioHerencia
         })
     }
 
@@ -116,17 +117,26 @@ export class UserForm extends Component {
                     <Confirm
                         nextStep={this.nextStep}
                         prevStep={this.prevStep}
+                        updateCalc={this.updateCalc}
                         values={values}
                     />
                 )
             case 6:
                 return(
                     <Success
+                        nextStep={this.nextStep}
                         prevStep={this.prevStep}
-                        updateCalc={this.updateCalc}
                         values={values}
                     />
                 )
+            // case 7:
+            //     return(
+            //         <Optimization
+            //             prevStep={this.prevStep}
+            //             updateCalc={this.updateCalc}
+            //             values={values}
+            //         />
+            //     )
         }
     }
 }

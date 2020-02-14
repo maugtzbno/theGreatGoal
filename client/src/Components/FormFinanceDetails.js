@@ -30,7 +30,7 @@ export class FormFinanceDetails extends Component {
                     />
                     <br/>
                     <TextField
-                        hintText="Enter Your State Tax"
+                        hintText="For example a 30% tax, enter 30"
                         floatingLabelText="Tax"
                         onChange={handleChange('tax')}
                         defaultValue={values.tax}

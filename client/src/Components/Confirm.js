@@ -14,6 +14,7 @@ export class FormUserDetails extends Component {
     continue = e =>{
         e.preventDefault();
         API.sendData(this.props.values)
+        .then(data => this.props.updateCalc(data))
         this.props.nextStep()
     }
 

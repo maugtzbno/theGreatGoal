@@ -2,7 +2,7 @@ import React, { Component } from 'react';
 import MuiThemeProvider from 'material-ui/styles/MuiThemeProvider';
 import AppBar from 'material-ui/AppBar';
 import RaisedButton from 'material-ui/RaisedButton';
-import API from '../utils'
+//import API from '../utils'
 import CanvasJSReact from './canvasjs.react.js'
 var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
@@ -12,16 +12,16 @@ export class Success extends Component {
         isActive: true
     }
 
-    componentDidMount = () =>{
-        console.log("justo despues del did mount")
-        console.log(this.props.values)
-        API.getData(this.props.values)
-            .then(x=>{
-                console.log("dentro de component mount did")
-                console.log(x)
-                this.props.updateCalc(x.data[0])
-            })
-    }
+    // componentDidMount = () =>{
+    //     console.log("justo despues del did mount")
+    //     console.log(this.props.values)
+    //     API.getData(this.props.values)
+    //         .then(x=>{
+    //             console.log("dentro de component mount did")
+    //             console.log(x)
+    //             this.props.updateCalc(x.data[0])
+    //         })
+    // }
 
     currSty(num) {
         return (new Intl.NumberFormat('en-GB').format(num))
@@ -29,12 +29,7 @@ export class Success extends Component {
 
     continue = e =>{
         e.preventDefault();
-        // Process Form (API) //
-        API.sendCont(this.props.values)
-        API.sendNot()
-        this.setState({
-            isActive: false
-        })
+        this.props.nextStep()
     }
 
     back = e =>{
@@ -45,9 +40,6 @@ export class Success extends Component {
     render() {
         const { values } = this.props;
         var msg = ""
-        //
-        console.log("props")
-        console.log(values)
         if (values.scenSavings.length > 0) {
 			var dataAhorro = []
 			var dataGasto = []
@@ -117,53 +109,40 @@ export class Success extends Component {
         else{
             msg = "Unfortunately! If you mantain your current savings habits you are expected to have saved the total amount of " + this.currSty(values.forecastedSavings) + " which will not be enough to keep your current expense and hence leave a total debt of " + this.currSty(values.forecastedRetire) +" at your expected life"
         }
-        if (this.state.isActive){
-            return (
-                <MuiThemeProvider>
-                    <React.Fragment>
-                        <AppBar title="Are you saving enough?" />
-                        <p style={styles.par}>{msg}</p>
-                        <br></br>
-                        <div style={styles.container}>
-                            <div style={styles.graph}>
-                                <CanvasJSChart 
-                                options={optionsA}
-                                />
-                            </div>
-                            <div style={styles.graph}>
-                                <CanvasJSChart 
-                                options={optionsG}
-                                />
-                            </div>
+        return (
+            <MuiThemeProvider>
+                <React.Fragment>
+                    <AppBar title="Are you saving enough?" />
+                    <p style={styles.par}>{msg}</p>
+                    <br></br>
+                    <div style={styles.container}>
+                        <div style={styles.graph}>
+                            <CanvasJSChart 
+                            options={optionsA}
+                            />
                         </div>
-                        <br></br>
-                        <RaisedButton
-                            label="Click if you wish to be contacted"
-                            primary={true}
-                            style={styles.button}
-                            onClick={this.continue}
-                        />
-                        <RaisedButton
-                            label="Back"
-                            primary={false}
-                            style={styles.button}
-                            onClick={this.back}
-                        />
-                    </React.Fragment>
-                </MuiThemeProvider>
-            )
-        }
-        else{
-            return(
-                <MuiThemeProvider>
-                    <React.Fragment>
-                        <AppBar title="Great!!! We will be in touch" />
-                        <p>You will be receiving an email with further instructions.</p>
-                    </React.Fragment>
-                </MuiThemeProvider>
-            )
-        }
-        
+                        <div style={styles.graph}>
+                            <CanvasJSChart 
+                            options={optionsG}
+                            />
+                        </div>
+                    </div>
+                    <br></br>
+                    <RaisedButton
+                        label="How can I make more on my investment!"
+                        primary={true}
+                        style={styles.button}
+                        onClick={this.continue}
+                    />
+                    <RaisedButton
+                        label="Back"
+                        primary={false}
+                        style={styles.button}
+                        onClick={this.back}
+                    />
+                </React.Fragment>
+            </MuiThemeProvider>
+        )
     }
 }
 
@@ -172,7 +151,9 @@ const styles = {
         margin: 15
     },
     par: {
-        justifyContent: "center"
+        justifyContent: "center",
+        paddingLeft: 100,
+        paddingRight: 100
     },
     graph: {
         width: 500

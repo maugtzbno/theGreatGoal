@@ -80,7 +80,7 @@ function retiro(data){
     tiempoMesesRetiro = tiempoAnosRetiro * 12;
 
     ingresoMensualBruto = data.income*1;
-    tasaRetencion = data.tax*1;
+    tasaRetencion = data.tax/100;
     ingresoMensualNeto = ingresoMensualBruto * (1 - tasaRetencion);
     gastoMensual = data.expense*1;
     ahorroMensualActual = ingresoMensualNeto - gastoMensual;
