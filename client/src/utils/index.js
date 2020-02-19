@@ -19,8 +19,8 @@ export default {
     },
 
     //Get scenario from Server
-    getScenario: function(){
-        return axios.get('/getScenario')
+    getScenario: function(data){
+        return axios.post('/getScenario', data)
     },
 
     //Send data to Server

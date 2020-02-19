@@ -5,7 +5,7 @@ import FormFinanceDetails from './FormFinanceDetails';
 import FormSavingDetails from './FormSavingDetails';
 import Confirm from './Confirm'
 import Success from './Success'
-//import Optimization from './Optimization'
+import Optimization from './Optimization'
 
 export class UserForm extends Component {
     state = {
@@ -24,6 +24,9 @@ export class UserForm extends Component {
         expense: "",
         // Saving Details
         savings: "",
+        // Yield Details
+        rateSavings: 0.04,
+        rateRetire: 0.03,
         //Calculated Values from API
         forecastedSavings: "",
         forecastedRetire: "",
@@ -62,18 +65,42 @@ export class UserForm extends Component {
         })
     }
 
+    //Update rates
+    updateRates = input => {
+        var delta = 0;
+        if (input == "addYield"){
+            delta = .01    
+        }
+        else {
+            delta = -.01
+        }
+        this.setState({
+            rateSavings: this.state.rateSavings + delta,
+            rateRetire: this.state.rateRetire + delta
+
+        })
+    }
+
+    //Update scenario fields
+    updateScen = input => {
+        this.setState({
+            scenSavings: input.data.ahorroScen,
+            scenRetire: input.data.gastoScen
+        })
+    }
+
     render() {
         const { step } = this.state;
         const { firstName, lastName, email, 
             age, retire, expected, 
             income, tax, expense,
-            savings, 
+            savings, rateSavings, rateRetire,
             forecastedSavings, forecastedRetire,
             scenSavings, scenRetire } = this.state;
         const values = { firstName, lastName, email, 
             age, retire, expected, 
             income, tax, expense,
-            savings, 
+            savings, rateSavings, rateRetire,
             forecastedSavings, forecastedRetire,
             scenSavings, scenRetire };
         switch(step) {
@@ -129,14 +156,15 @@ export class UserForm extends Component {
                         values={values}
                     />
                 )
-            // case 7:
-            //     return(
-            //         <Optimization
-            //             prevStep={this.prevStep}
-            //             updateCalc={this.updateCalc}
-            //             values={values}
-            //         />
-            //     )
+            case 7:
+                return(
+                    <Optimization
+                        prevStep={this.prevStep}
+                        updateRates={this.updateRates}
+                        updateScen={this.updateScen}
+                        values={values}
+                    />
+                )
         }
     }
 }

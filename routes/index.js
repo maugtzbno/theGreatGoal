@@ -80,17 +80,17 @@ function retiro(data){
     tiempoMesesRetiro = tiempoAnosRetiro * 12;
 
     ingresoMensualBruto = data.income*1;
-    tasaRetencion = data.tax/100;
+    tasaRetencion = data.tax/100;    
     ingresoMensualNeto = ingresoMensualBruto * (1 - tasaRetencion);
     gastoMensual = data.expense*1;
     ahorroMensualActual = ingresoMensualNeto - gastoMensual;
     
     saldoActual = data.savings*1;
 
-    tasaRealAhorro = 0.04;
+    tasaRealAhorro = data.rateSavings;
     pronosticoAhorro = ahorro(ingresoMensualBruto, tasaRetencion, gastoMensual, edadActual, edadRetiro, tasaRealAhorro, saldoActual)[0];
     escenarioAhorro = ahorro(ingresoMensualBruto, tasaRetencion, gastoMensual, edadActual, edadRetiro, tasaRealAhorro, saldoActual)[1];
-    tasaRealRetiro = 0.03; 
+    tasaRealRetiro = data.rateRetire; 
     pronosticoHerencia = gasto(gastoMensual, edadRetiro, edadEsperanza, tasaRealRetiro, pronosticoAhorro)[0]
     escenarioHerencia = gasto(gastoMensual, edadRetiro, edadEsperanza, tasaRealRetiro, pronosticoAhorro)[1]
 
@@ -155,7 +155,6 @@ router.use("/getData/:firstName/:lastName/:email", function (req, res){
             res.json(dbModel)
         })
         .catch(err =>{
-            console.log("catch")
             res.status(422).json(err)
         });
 })
@@ -170,19 +169,26 @@ router.post("/sendData", function(req, res){
 
 })
 
-router.use("/getScenario", function (req, res){
-    ahorroFin     = ahorro(100000, 0.30, 60000, 30, 65, 0.04, 50000)[0];
-    ahorroScen    = ahorro(100000, 0.30, 60000, 30, 65, 0.04, 50000)[1];
-    ahorroFinOpt  = ahorro(100000, 0.30, 60000, 30, 65, 0.05, 50000)[0];
-    ahorroScenOpt = ahorro(100000, 0.30, 60000, 30, 65, 0.05, 50000)[1];
+router.post("/getScenario", function (req, res){
 
+    ingresoMensualBruto = req.body.income*1;
+    tasaRetencion = req.body.tax/100;
+    gastoMensual = req.body.expense*1;
+    edadActual =req.body.age*1;
+    edadRetiro = req.body.retire*1;
+    edadEsperanza = req.body.expected*1;
+    saldoActual = req.body.savings*1;
+    tasaRealAhorro = req.body.rateSavings;
+    tasaRealRetiro = req.body.rateRetire; 
 
-    gastoFin     = gasto(60000, 65, 85, 0.03, ahorroFin)[0]
-    gastoScen    = gasto(60000, 65, 85, 0.03, ahorroFin)[1]
-    gastoFinOpt  = gasto(65000, 65, 85, 0.04, ahorroFinOpt)[0]
-    gastoScenOpt = gasto(65000, 65, 85, 0.04, ahorroFinOpt)[1]
+    ahorroFin = ahorro(ingresoMensualBruto, tasaRetencion, gastoMensual, edadActual, edadRetiro, tasaRealAhorro, saldoActual)[0];
+    ahorroScen = ahorro(ingresoMensualBruto, tasaRetencion, gastoMensual, edadActual, edadRetiro, tasaRealAhorro, saldoActual)[1];
 
-    data = {ahorroScen, ahorroScenOpt, gastoScen, gastoScenOpt}
+    gastoFin = gasto(gastoMensual, edadRetiro, edadEsperanza, tasaRealRetiro, ahorroFin)[0]
+    gastoScen = gasto(gastoMensual, edadRetiro, edadEsperanza, tasaRealRetiro, ahorroFin)[1]
+
+    data = {ahorroScen, gastoScen}
+
     res.json(data)
 })
 

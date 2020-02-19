@@ -8,21 +8,6 @@ var CanvasJSChart = CanvasJSReact.CanvasJSChart;
 
 export class Success extends Component {
 
-    state = {
-        isActive: true
-    }
-
-    // componentDidMount = () =>{
-    //     console.log("justo despues del did mount")
-    //     console.log(this.props.values)
-    //     API.getData(this.props.values)
-    //         .then(x=>{
-    //             console.log("dentro de component mount did")
-    //             console.log(x)
-    //             this.props.updateCalc(x.data[0])
-    //         })
-    // }
-
     currSty(num) {
         return (new Intl.NumberFormat('en-GB').format(num))
     }

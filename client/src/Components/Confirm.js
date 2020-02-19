@@ -11,6 +11,10 @@ export class FormUserDetails extends Component {
         return (new Intl.NumberFormat('en-GB').format(num))
     }
 
+    percSty(num) {
+        return Number(num/100).toLocaleString(undefined,{style: 'percent', minimumFractionDigits:2});
+    }
+
     continue = e =>{
         e.preventDefault();
         API.sendData(this.props.values)
@@ -63,7 +67,7 @@ export class FormUserDetails extends Component {
                         />
                         <ListItem 
                             primaryText="Tax"
-                            secondaryText={tax}
+                            secondaryText={this.percSty(tax)}
                         />
                         <ListItem 
                             primaryText="Monthly Expense"
