@@ -328,47 +328,61 @@ export class Optimization extends Component {
 				type: "area",
 				dataPoints: dataGasto
 			}]
-		}
-        return (
-            <MuiThemeProvider>
-                <React.Fragment>
-                    <AppBar title="How much a 1% increase affect my investment?" />
-                    <p style={styles.par}>Click on the Add o Minus Button to see the effect of the return in your invetment!</p>
-                    <br></br>
-                    <Fab color="primary" aria-label="add">
-                        <AddIcon onClick={this.addYield}/>
-                    </Fab>
-                    <Fab color="secondary" aria-label="edit">
-                        <RemoveIcon onClick={this.minusYield}/>
-                    </Fab>
-                    <div style={styles.container}>
-                        <div style={styles.graph}>
-                            <CanvasJSChart 
-                            options={optionsA}
-                            />
+        }
+        
+        if (this.state.isActive){
+            return (
+                <MuiThemeProvider>
+                    <React.Fragment>
+                        <AppBar title="How much a 1% increase affect my investment?" />
+                        <p style={styles.par}>Click on the Add o Minus Button to see the effect of the return in your invetment!</p>
+                        <br></br>
+                        <Fab color="primary" aria-label="add">
+                            <AddIcon onClick={this.addYield}/>
+                        </Fab>
+                        <Fab color="secondary" aria-label="edit">
+                            <RemoveIcon onClick={this.minusYield}/>
+                        </Fab>
+                        <div style={styles.container}>
+                            <div style={styles.graph}>
+                                <CanvasJSChart 
+                                options={optionsA}
+                                />
+                            </div>
+                            <div style={styles.graph}>
+                                <CanvasJSChart 
+                                options={optionsG}
+                                />
+                            </div>
                         </div>
-                        <div style={styles.graph}>
-                            <CanvasJSChart 
-                            options={optionsG}
-                            />
-                        </div>
-                    </div>
-                    <br></br>
-                    <RaisedButton
-                        label="Click if you wish to be contacted"
-                        primary={true}
-                        style={styles.button}
-                        onClick={this.continue}
-                    />
-                    <RaisedButton
-                        label="Back"
-                        primary={false}
-                        style={styles.button}
-                        onClick={this.back}
-                    />
-                </React.Fragment>
-            </MuiThemeProvider>
-        )
+                        <br></br>
+                        <RaisedButton
+                            label="Click if you wish to be contacted"
+                            primary={true}
+                            style={styles.button}
+                            onClick={this.continue}
+                        />
+                        <RaisedButton
+                            label="Back"
+                            primary={false}
+                            style={styles.button}
+                            onClick={this.back}
+                        />
+                    </React.Fragment>
+                </MuiThemeProvider>
+            )
+        }
+        else{
+            return(
+                <MuiThemeProvider>
+                    <React.Fragment>
+                        <AppBar title="Great!!! We will be in touch" />
+                        <p>You will be receiving an email with further instructions.</p>
+                    </React.Fragment>
+                </MuiThemeProvider>
+            )
+        }
+        
     }
 }
 
